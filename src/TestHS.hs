@@ -2,6 +2,7 @@ module TestHS
     ( Test
     , runTest
     , reportTests
+    , reportTestsIO
     , testPassed
     , testFailed
     ) where
