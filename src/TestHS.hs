@@ -7,9 +7,12 @@ module TestHS
     ) where
 
 import Data.Tuple
+import Control.Monad
 import System.Console.ANSI
 import System.Exit
 
+
+-- | Test data type
 data Test = Test
   { name :: String
   , outcome :: Either (String, String) String
@@ -26,7 +29,8 @@ testFailed t f = Test
   { name = t
   , outcome = Left f
   }
-  
+ 
+-- | run pure test
 runTest :: Test -> IO Test
 runTest t = do
   case outcome t of
@@ -48,6 +52,28 @@ runTest t = do
 reportTests :: [Test] -> IO ()
 reportTests ts = do
   tests <- sequence $ map runTest ts
+  let lt = length tests
+  let passedtests = filter 
+                    (\test -> case outcome test of 
+                      Left _ -> False
+                      Right _ -> True)
+                      tests
+  let failedTests = lt - length passedtests
+  let passedAll = length passedtests == lt
+  case passedAll of
+       True -> do
+         putStrLn $ "Passed all " ++ (show lt) ++ " tests!! 🎉"
+       False -> do
+         putStrLn $ "Failed "  ++ (show failedTests) ++ " test(s) 😣"
+         exitFailure
+
+-- | Run tests with IO
+reportTestsIO :: [IO Test] -> IO ()
+reportTestsIO ts = do
+  putStrLn "Running tests"
+  testsIO <- sequence ts
+  putStrLn "Reporting tests"
+  tests <- sequence $ map runTest testsIO
   let lt = length tests
   let passedtests = filter 
                     (\test -> case outcome test of 
