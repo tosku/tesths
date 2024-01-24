@@ -1,10 +1,10 @@
 name:           tesths
-version:        0.2.0.1
+version:        0.2.1.1
 description:    Please see the README on Github at <https://github.com/tosku/tesths#readme>
 homepage:       https://github.com/tosku/tesths#readme
 author:         Thodoris Papakonstantinou
 maintainer:     mail@tpapak.com
-copyright:      2018 Thodoris Papakonstantinou
+copyright:      2024 Thodoris Papakonstantinou
 license:        GPL-3
 license-file:   LICENSE
 build-type:     Simple
@@ -22,7 +22,7 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      base >=4.7 
     , ansi-terminal
   exposed-modules:
       TestHS
